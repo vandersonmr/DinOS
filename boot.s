@@ -3,7 +3,8 @@
 
 start16:
 
-    ; Carregando o codigo no init do disco
+    ; Carregando o codigo do init.c do disco
+    ; http://wiki.osdev.org/ATA_in_x86_RealMode_(BIOS)
     mov ah, 2
     mov al, 2
     mov ch, 0
