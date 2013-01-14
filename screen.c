@@ -22,6 +22,4 @@ void clearscreen() {
     for(i=0;i<20000;i++)
 	*video++= 0x0;
 
-    return 0;
-
 }

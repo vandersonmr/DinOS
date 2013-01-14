@@ -1,31 +1,38 @@
-all: disk build init libs kernel make
+all: buildimage
 
-disk:
-	dd if=/dev/zero of=disk.img bs=1m count=10 > /dev/null 2>&1
-
-build:
-	nasm -fbin -o boot.o boot.s
-
-make:
-	/opt/local/bin/i386-elf-ld -i -Ttext 0x10000 kernel.o screen.o -o kernel.img
-	/opt/local/bin/i386-elf-ld -S -e init -T linker.ld init.o idt.o exception_handler.o exceptions.o screen.o -o init.bin
+buildimage: boot.o init.o kernel.o disk.img
 	dd if=boot.o of=disk.img bs=512 count=1 conv=notrunc > /dev/null 2>&1
 	dd if=init.bin of=disk.img bs=512 seek=1 conv=notrunc > /dev/null 2>&1
 	dd if=kernel.img of=disk.img bs=512 seek=32 conv=notrunc > /dev/null 2>&1
 
-init:
-	/opt/local/bin/i386-elf-gcc -Wall -Os -c init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
-	/opt/local/bin/i386-elf-gcc -Wall -Os -c exceptions.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
-	nasm -felf32 -o idt.o idt.s
-	nasm -felf32 -o exception_handler.o exception_handler.s
+disk.img:
+	dd if=/dev/zero of=disk.img bs=1m count=10 > /dev/null 2>&1
 
-libs: screen
+boot.o: boot.s
+	nasm -fbin -o boot.o boot.s
 
-screen:
-	/opt/local/bin/i386-elf-gcc -Wall -Os -c screen.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+init.o: init.c exceptions.o exception_handler.o io.o screen.o
+	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	/opt/local/bin/i386-elf-ld -T init.ld -o init.bin
 
-kernel:
+exceptions.o: exceptions.c
+	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c exceptions.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
+idt.o: idt.c idt.h
+	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c idt.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
+exception_handler.o exception_handler.s:
+	nasm -felf32 -g -o exception_handler.o exception_handler.s
+
+io.o: io.s
+	nasm -felf32 -g -o io.o io.s
+
+screen.o: screen.c screen.h
+	/opt/local/bin/i386-elf-gcc -Wall -O0 -g -c screen.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
+kernel.o: kernel.c
 	/opt/local/bin/i386-elf-gcc -Wall -Os -c kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	/opt/local/bin/i386-elf-ld -i -Ttext 0x10000 kernel.o screen.o -o kernel.img
 
 clean:
 	rm -rf *.o *.img *.bin

@@ -1,3 +1,13 @@
+INPUT(
+    init.o
+    exception_handler.o
+    exceptions.o
+    screen.o
+    io.o
+    )
+
+ENTRY(init);
+
 SECTIONS
 {
     . = 0x001000;
