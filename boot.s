@@ -4,13 +4,14 @@
 start16:
 
     ; Carregando o codigo do init.c do disco
-    ; http://wiki.osdev.org/ATA_in_x86_RealMode_(BIOS)
+    ; http://wiki.osdev.org/ATA_in_x86_RealMode_(BIOS)#Reading_sectors_with_a_CHS_address
     mov ah, 2
-    mov al, 2
+    mov al, 20   ; numero de setores a serem lidos
     mov ch, 0
     mov cl, 2
     mov dh, 0
-    mov bx, 0x1000
+    ;mov bx, 0x1000
+    mov bx, 0x00
     mov dl, 0x80
     int 0x13
 
