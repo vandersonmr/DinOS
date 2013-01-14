@@ -17,6 +17,11 @@ int print(const char *string, int x, int y) {
 
 void clearscreen() {
 
-    //const char *video = (const char *) VIDEO;
+    char *video = (char *) VIDEO;
+    int i;
+    for(i=0;i<20000;i++)
+	*video++= 0x0;
+
+    return 0;
 
 }
