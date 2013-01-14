@@ -33,7 +33,7 @@ void init() {
 
     idt_setup((unsigned int)&idt_tab);
 
-    print("Mensagem de dentro no arquivo init.c", 20, 0);
+    print("Mensagem de dentro do arquivo init.c", 20, 0);
 
     for(;;) {
     /*
