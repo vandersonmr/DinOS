@@ -1,13 +1,16 @@
 #include "idt.h"
 #include "screen.h"
 
-int x;
+char x;
+int version;
 
 int main() {
 
-    x = 100;
+    version=12;
+    x = '*';
+    char virgula = ',';
 
-    print("The Fucking Kernel", 15, 0);
+    printk("The Fucking%c Kernel %c versao: %d", 15, 0,virgula,x,version);
 
     for(;;);
 
