@@ -1,5 +1,7 @@
 section .text
 
+; http://forum.osdev.org/viewtopic.php?t=12268
+
 global inb
 global insword
 global outb

@@ -1,25 +1,29 @@
 INPUT(
-    kernel.o
+    init.o
+    exception_handler.o
+    exceptions.o
     screen.o
+    string.o
+    io.o
     )
 
-ENTRY(main);
+ENTRY(init);
 
 SECTIONS
 {
-    . = 0x90000;
+    . = 0x001000;
 
-    .text ALIGN (0x100000) :
+    .text ALIGN (0x1000) :
     {
         *(.text)
 }
 
-    .rodata ALIGN (0x100000) :
+    .rodata ALIGN (0x1000) :
     {
         *(.rodata*)
     }
 
-    .data ALIGN (0x100000) :
+    .data ALIGN (0x1000) :
     {
         *(.data)
     }

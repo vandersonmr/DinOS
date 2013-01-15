@@ -4,6 +4,10 @@
 char x;
 int version;
 
+char nome[123];
+
+void *n = 0x1000;
+
 int main() {
 
     version=12;
