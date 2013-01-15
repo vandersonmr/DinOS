@@ -1,6 +1,7 @@
 INPUT(
     kernel.o
     screen.o
+    cpuid.o
     )
 
 ENTRY(main);

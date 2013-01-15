@@ -1,18 +1,16 @@
 #include "idt.h"
 #include "screen.h"
+#include "cpuid.h"
 
-int x;
 
-char nome[123];
+struct cpuid *cpuinfo; 
 
-void *n = 0x1000;
+int main() { 
 
-int main() {
-
-    x = 100;
-
-    print("The Fucking Kernel", 15, 0);
-
+    clearscreen();
+    loadCpuInfo(cpuinfo);
+    print("Hardware info: %s\nFamily feature flag: %b",2,0,cpuinfo->vendorID,cpuinfo->familyInfo);  
+      
     for(;;);
 
 }

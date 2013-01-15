@@ -1,6 +1,6 @@
 /* Código responsável por buscar informações da CPU e checar suas capacidades */
 
-#include "cpuid.h"
+#include "cpuid.h" 
 
 void doCpuid(unsigned info, unsigned *eax, unsigned *ebx, 
 				unsigned *ecx, unsigned *edx){
@@ -14,7 +14,7 @@ void doCpuid(unsigned info, unsigned *eax, unsigned *ebx,
 // Carrega o CPU's manufacturer ID string na estrutura cid 
 void loadVendorID(struct cpuid* cid){
 
-	doCpuid(0,&cid->id,cid->vendorID[0],cid->vendorID[2],cid->vendorID[1]);
+	doCpuid(0,&cid->id,cid->vendorID[0],cid->vendorID[4],cid->vendorID[8]);
 	
 }
 
