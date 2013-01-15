@@ -3,6 +3,7 @@ INPUT(
     exception_handler.o
     exceptions.o
     screen.o
+    string.o
     io.o
     )
 

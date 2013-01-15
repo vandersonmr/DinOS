@@ -1,5 +1,6 @@
 #include "x86.h"
 #include "screen.h"
+#include "string.h"
 
 static void readsector(void *, int);
 static void readsegment(void *, int, int);
@@ -17,17 +18,12 @@ void init() {
     unsigned char *copy = (unsigned char *) 0x200000;
     unsigned char *from = (unsigned char *) 0x101000;
 
-    for(i=0;i<100;i++) {
-        *copy = *from;
-        copy++;
-        from++;
-
-    }
-    
     clearscreen();
     print("Mensagem de dentro do arquivo " __FILE__, 0, 0);
 
     //readsector((void *)kernel, 32);
+
+    memcpy((void *)copy, (void *)from, 100);
 
     kernel_code();
 

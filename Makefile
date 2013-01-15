@@ -11,7 +11,7 @@ disk.img:
 boot.o: boot/boot.s
 	nasm -fbin -o boot.o boot/boot.s
 
-init.o: boot/init.c exceptions.o exception_handler.o io.o screen.o include/x86.h
+init.o: boot/init.c string.o exceptions.o exception_handler.o io.o screen.o include/x86.h
 	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -I./include -c boot/init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	/opt/local/bin/i386-elf-ld -T boot/init.ld -o init.bin
 
@@ -26,6 +26,9 @@ exception_handler.o: exceptions/exception_handler.s
 
 io.o: lib/io.s
 	nasm -felf32 -g -o io.o lib/io.s
+
+string.o: lib/string.s include/string.h
+	nasm -felf32 -g -o string.o lib/string.s
 
 screen.o: lib/screen.c include/screen.h
 	/opt/local/bin/i386-elf-gcc -Wall -O0 -g -I./include -c lib/screen.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
