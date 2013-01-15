@@ -3,6 +3,10 @@
 
 int x;
 
+char nome[123];
+
+void *n = 0x1000;
+
 int main() {
 
     x = 100;

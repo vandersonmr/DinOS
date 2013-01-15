@@ -8,7 +8,7 @@ void init() {
 
     unsigned char *kernel = (unsigned char *) 0xff000;
 
-    int (*kernel_code)() = 0x100000;
+    int (*kernel_code)() = (int(*)()) 0x100000;
 
     int i = 100;
 

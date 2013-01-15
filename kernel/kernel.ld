@@ -7,12 +7,12 @@ ENTRY(main);
 
 SECTIONS
 {
-    . = 0x90000;
+    . = 0x100000;
 
     .text ALIGN (0x100000) :
     {
         *(.text)
-}
+    }
 
     .rodata ALIGN (0x100000) :
     {
