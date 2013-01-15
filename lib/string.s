@@ -10,6 +10,7 @@ memcpy:
     push esi
     push ecx
 
+    cld
     mov edi, [ebp + 8]
     mov esi, [ebp + 12]
     mov ecx, [ebp + 16]
