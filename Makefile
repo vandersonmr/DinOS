@@ -1,6 +1,3 @@
-CC = /opt/local/bin/i386-elf-gcc
-LD = /opt/local/bin/i386-elf-ld
-
 all: buildimage
 
 buildimage: boot.o init.o kernel.o disk.img
@@ -15,14 +12,14 @@ boot.o: boot.s
 	nasm -fbin -o boot.o boot.s
 
 init.o: init.c exceptions.o exception_handler.o io.o screen.o
-	$(CC) -Wall -g -O0 -c init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
-	$(LD) -T init.ld -o init.bin
+	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	/opt/local/bin/i386-elf-ld -T init.ld -o init.bin
 
 exceptions.o: exceptions.c
-	$(CC) -Wall -g -O0 -c exceptions.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c exceptions.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
 idt.o: idt.c idt.h
-	$(CC) -Wall -g -O0 -c idt.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c idt.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
 exception_handler.o exception_handler.s:
 	nasm -felf32 -g -o exception_handler.o exception_handler.s
@@ -31,11 +28,11 @@ io.o: io.s
 	nasm -felf32 -g -o io.o io.s
 
 screen.o: screen.c screen.h
-	$(CC) -Wall -O0 -g -c screen.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	/opt/local/bin/i386-elf-gcc -Wall -O0 -g -c screen.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
 kernel.o: kernel.c
-	$(CC) -Wall -Os -c kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
-	$(LD) -i -Ttext 0x10000 kernel.o screen.o -o kernel.img
+	/opt/local/bin/i386-elf-gcc -Wall -Os -c kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	/opt/local/bin/i386-elf-ld -i -Ttext 0x10000 kernel.o screen.o -o kernel.img
 
 clean:
 	rm -rf *.o *.img *.bin
