@@ -4,6 +4,7 @@ INPUT(
     exceptions.o
     screen.o
     string.o
+    elf.o
     io.o
     )
 
