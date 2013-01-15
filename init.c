@@ -6,12 +6,30 @@ static void readsegment(void *, int, int);
 
 void init() {
 
-    unsigned char *kernel = (unsigned char *) 0x100000;
+    unsigned char *kernel = (unsigned char *) 0xff000;
+
+    int (*kernel_code)() = 0x100000;
+
+    int i = 100;
+
+    readsegment((void *)kernel, 32, 2048);
+
+    unsigned char *copy = (unsigned char *) 0x200000;
+    unsigned char *from = (unsigned char *) 0x101000;
+
+    for(i=0;i<100;i++) {
+        *copy = *from;
+        copy++;
+        from++;
+
+    }
     
     clearscreen();
     print("Mensagem de dentro do arquivo " __FILE__, 0, 0);
 
-    readsegment((void *)kernel, 32, 1);
+    //readsector((void *)kernel, 32);
+
+    kernel_code();
 
     for(;;) {
     }
@@ -39,8 +57,8 @@ static void readsegment(void *addr, int offset, int num) {
 
     for(; num > 0; num--) {
         readsector(addr, offset);
-        addr += 2;
-        offset += 2;
+        addr += SECTORSIZE;
+        offset += 1;
     }
 
 

@@ -7,7 +7,7 @@ ENTRY(main);
 
 SECTIONS
 {
-    . = 0x100000;
+    . = 0x90000;
 
     .text ALIGN (0x100000) :
     {
