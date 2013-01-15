@@ -11,12 +11,12 @@ buildimage: boot.o init.o kernel.o disk.img
 	dd if=kernel.img of=disk.img bs=512 seek=64 conv=notrunc > /dev/null 2>&1
 
 disk.img:
-	dd if=/dev/zero of=disk.img bs=1m count=10 > /dev/null 2>&1
+	dd if=/dev/zero of=disk.img bs=1M count=10 > /dev/null 2>&1
 
 boot.o: boot/boot.s
 	${NASM} -fbin -o boot.o boot/boot.s
 
-init.o: boot/init.c elf.o string.o exceptions.o exception_handler.o io.o screen.o include/x86.h include/elf.h
+init.o: boot/init.c elf.o string.o exceptions.o exception_handler.o io.o screen.o include/x86.h include/elf.h 
 	${CC} ${CFLAGS} -c boot/init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T boot/init.ld -o init.bin
 
@@ -41,7 +41,10 @@ screen.o: lib/screen.c include/screen.h
 elf.o: lib/elf.c include/elf.h
 	${CC} ${CFLAGS} -c lib/elf.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
-kernel.o: kernel/kernel.c lib/screen.c
+cpuid.o: 
+	${CC} ${CFLAGS} -c lib/cpuid.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	
+kernel.o: kernel/kernel.c lib/screen.c cpuid.o
 	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T kernel/kernel.ld -o kernel.img
 
