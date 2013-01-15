@@ -11,7 +11,7 @@ disk.img:
 boot.o: boot.s
 	nasm -fbin -o boot.o boot.s
 
-init.o: init.c exceptions.o exception_handler.o io.o screen.o
+init.o: init.c exceptions.o exception_handler.o io.o screen.o x86.h
 	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	/opt/local/bin/i386-elf-ld -T init.ld -o init.bin
 
@@ -21,7 +21,7 @@ exceptions.o: exceptions.c
 idt.o: idt.c idt.h
 	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c idt.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
-exception_handler.o exception_handler.s:
+exception_handler.o: exception_handler.s
 	nasm -felf32 -g -o exception_handler.o exception_handler.s
 
 io.o: io.s
@@ -30,9 +30,9 @@ io.o: io.s
 screen.o: screen.c screen.h
 	/opt/local/bin/i386-elf-gcc -Wall -O0 -g -c screen.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
-kernel.o: kernel.c
-	/opt/local/bin/i386-elf-gcc -Wall -Os -c kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
-	/opt/local/bin/i386-elf-ld -i -Ttext 0x10000 kernel.o screen.o -o kernel.img
+kernel.o: kernel.c screen.c
+	/opt/local/bin/i386-elf-gcc -Wall -g -O0 -c kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	/opt/local/bin/i386-elf-ld -T kernel.ld -o kernel.img
 
 clean:
 	rm -rf *.o *.img *.bin
