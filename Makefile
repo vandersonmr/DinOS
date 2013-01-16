@@ -16,7 +16,7 @@ disk.img:
 boot.o: boot/boot.s
 	${NASM} -fbin -o boot.o boot/boot.s
 
-init.o: boot/init.c lib/screen.c include/screen.h string.o io.o include/x86.h
+init.o: boot/init.c screen.o lib/screen.c include/screen.h string.o io.o include/x86.h
 	${CC} ${CFLAGS} -c boot/init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T boot/init.ld -o init.bin
 
