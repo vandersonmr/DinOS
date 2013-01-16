@@ -7,9 +7,12 @@ struct cpuid *cpuinfo;
 
 int main() { 
 
-    clearscreen();
+    print("Kernel Loaded\n",1, 0);
+
     loadCpuInfo(cpuinfo);
+
     print("Hardware info: %s\nFamily feature flag: %b",2,0,cpuinfo->vendorID,cpuinfo->familyInfo);  
+
       
     for(;;);
 

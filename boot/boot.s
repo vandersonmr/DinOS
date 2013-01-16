@@ -60,7 +60,7 @@ L2:
 
     ; Carregando o init.bin na memória
     call waitdisk
-    push 20
+    push 40
     push 2
     push 0x1000
     call readsegment

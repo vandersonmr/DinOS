@@ -1,7 +1,7 @@
 CC=/opt/local/bin/i386-elf-gcc
 LD=/opt/local/bin/i386-elf-ld
 NASM=nasm
-CFLAGS=-Wall -g -O0 -I./include
+CFLAGS=-Wall -Wextra -g -O0 -I./include
 
 all: buildimage
 
