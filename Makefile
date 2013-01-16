@@ -11,7 +11,7 @@ buildimage: boot.o init.o kernel.o disk.img
 	dd if=kernel.img of=disk.img bs=512 seek=64 conv=notrunc > /dev/null 2>&1
 
 disk.img:
-	dd if=/dev/zero of=disk.img bs=1M count=10 > /dev/null 2>&1
+	dd if=/dev/zero of=disk.img bs=1m count=10 > /dev/null 2>&1
 
 boot.o: boot/boot.s
 	${NASM} -fbin -o boot.o boot/boot.s

@@ -3,17 +3,17 @@
 
 start16:
 
-    ; Carregando o codigo do init.c do disco
+    ; Carregando o codigo do init.c do disco via BIOS interrupt
+    ; Substituido por IO via IO ports la no modo protegido
     ; http://wiki.osdev.org/ATA_in_x86_RealMode_(BIOS)#Reading_sectors_with_a_CHS_address
-    mov ah, 2
-    mov al, 20   ; numero de setores a serem lidos
-    mov ch, 0
-    mov cl, 2
-    mov dh, 0
-    ;mov bx, 0x1000
-    mov bx, 0x00
-    mov dl, 0x80
-    int 0x13
+    ;mov ah, 2
+    ;mov al, 20   ; numero de setores a serem lidos
+    ;mov ch, 0
+    ;mov cl, 2
+    ;mov dh, 0
+    ;mov bx, 0x00
+    ;mov dl, 0x80
+    ;int 0x13
 
 
     cli
@@ -57,8 +57,25 @@ L2:
     dec ecx
     jnz L2
 
+
+    ; Carregando o init.bin na memória
+    call waitdisk
+    push 20
+    push 2
+    push 0x1000
+    call readsegment
+    add esp, 12
+
     ; Salta para o código carregado do segundo setor do disco (init.c)
+    jmp INIT
+
+
+%include "lib/io.s"
+
+
+INIT:
     jmp 0x1000
+
 
 
 string1: db "Ao vivo diretamente do Modo Protegido"
