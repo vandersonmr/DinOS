@@ -1,11 +1,8 @@
 INPUT(
     init.o
-    exception_handler.o
-    exceptions.o
-    screen.o
     string.o
-    elf.o
     io.o
+    screen.o
     )
 
 ENTRY(init);

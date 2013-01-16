@@ -59,10 +59,9 @@ L2:
 
 
     ; Carregando o init.bin na memória
-    call waitdisk
     push 40
     push 2
-    push 0x1000
+    push 0x200
     call readsegment
     add esp, 12
 
@@ -74,7 +73,7 @@ L2:
 
 
 INIT:
-    jmp 0x1000
+    call 0x1000
 
 
 

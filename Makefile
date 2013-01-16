@@ -16,7 +16,7 @@ disk.img:
 boot.o: boot/boot.s
 	${NASM} -fbin -o boot.o boot/boot.s
 
-init.o: boot/init.c elf.o string.o exceptions.o exception_handler.o io.o screen.o include/x86.h include/elf.h 
+init.o: boot/init.c lib/screen.c include/screen.h string.o io.o include/x86.h
 	${CC} ${CFLAGS} -c boot/init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T boot/init.ld -o init.bin
 
@@ -44,7 +44,7 @@ elf.o: lib/elf.c include/elf.h
 cpuid.o: 
 	${CC} ${CFLAGS} -c lib/cpuid.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	
-kernel.o: kernel/kernel.c lib/screen.c cpuid.o
+kernel.o: kernel/kernel.c screen.o lib/screen.c cpuid.o
 	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T kernel/kernel.ld -o kernel.img
 

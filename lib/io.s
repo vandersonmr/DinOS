@@ -47,7 +47,7 @@ outb:
 
 
 
-;void insword(int, void *, int);    
+;void insword(int port, void *addr, int words);    
 insword:
     push ebp
     mov ebp, esp
@@ -119,7 +119,7 @@ readsector:
 
     ;outb(0x1F4, offset >> 8);
     mov eax, edx
-    shr eax, 8
+    sar eax, 8
     push eax
     push 0x1f4
     call outb
@@ -127,7 +127,7 @@ readsector:
 
     ;outb(0x1F5, offset >> 16);
     mov eax, edx
-    shr eax, 16 
+    sar eax, 16 
     push eax
     push 0x1f5
     call outb
@@ -135,7 +135,7 @@ readsector:
 
     ;outb(0x1F6, (offset >> 24) | 0xE0);
     mov eax, edx
-    shr eax, 24 
+    sar eax, 24 
     or eax, 0xe0
     push eax
     push 0x1f6

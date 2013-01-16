@@ -5,6 +5,8 @@
 
 struct cpuid *cpuinfo; 
 
+int i = 10;
+
 int main() { 
 
     print("Kernel Loaded\n",1, 0);
