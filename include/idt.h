@@ -33,5 +33,7 @@ void idt_setup(unsigned int);
 void idt_init(struct idt_entry *, struct idt *);
 
 extern void int0();
+extern void int3();
+extern void int4();
 
 #endif

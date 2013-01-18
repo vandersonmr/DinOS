@@ -15,6 +15,8 @@ void idt_init(struct idt_entry *entries, struct idt *table) {
     table->base = (unsigned int) entries;
 
     set_idt_entry(0, entries, (unsigned int)int0, 0x08, 0x8e);
+    set_idt_entry(3, entries, (unsigned int)int3, 0x08, 0x8e);
+    set_idt_entry(4, entries, (unsigned int)int4, 0x08, 0x8e);
 
     idt_setup((unsigned int)table);
 

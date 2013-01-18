@@ -19,7 +19,12 @@ int main() {
 
     int a = 0;
 
+    unsigned char b = 0;
+
+    asm("int3\n");
+
     a /= a;
+
 
     loadCpuInfo(cpuinfo);
 
