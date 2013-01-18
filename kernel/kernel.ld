@@ -1,5 +1,11 @@
 INPUT(
     kernel.o
+    idt.o
+    interrupts_common.o
+    interrupts_trampoline.o
+    interrupt_handler.o
+    exceptions.o
+    string.o
     screen.o
     cpuid.o
     )

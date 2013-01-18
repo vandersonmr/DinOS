@@ -1,8 +1,23 @@
 #include "idt.h"
 
 void idt_setup(unsigned int idt){
-    //asm ("mov eax, [esp+4]"
-    //"lidt [eax]");
+    asm (
+            "lidt (%0)\n"
+            :
+            :"r" (idt)
+            :
+        );
+}
+
+void idt_init(struct idt_entry *entries, struct idt *table) {
+
+    table->limit = sizeof(struct idt_entry) * 256 - 1;
+    table->base = (unsigned int) entries;
+
+    set_idt_entry(0, entries, (unsigned int)int0, 0x08, 0x8e);
+
+    idt_setup((unsigned int)table);
+
 }
 
 void set_idt_entry(unsigned char num, struct idt_entry *tab, unsigned int base,

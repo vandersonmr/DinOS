@@ -23,11 +23,17 @@ init.o: boot/init.c screen.o lib/screen.c include/screen.h string.o io.o include
 exceptions.o: exceptions/exceptions.c
 	${CC} ${CFLAGS} -c exceptions/exceptions.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
-idt.o: exceptions/idt.c include/idt.h
+idt.o: exceptions/idt.c include/idt.h exceptions.o
 	${CC} ${CFLAGS} -c exceptions/idt.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
-exception_handler.o: exceptions/exception_handler.s
-	${NASM} -felf32 -g -o exception_handler.o exceptions/exception_handler.s
+interrupt_handler.o: exceptions/interrupt_handler.c
+	${CC} ${CFLAGS} -c exceptions/interrupt_handler.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
+interrupts_trampoline.o: exceptions/interrupts_trampoline.s
+	${NASM} -felf32 -g -o interrupts_trampoline.o exceptions/interrupts_trampoline.s
+
+interrupts_common.o: exceptions/interrupts_common.s
+	${NASM} -felf32 -g -o interrupts_common.o exceptions/interrupts_common.s
 
 io.o: lib/io.s
 	${NASM} -felf32 -g -o io.o lib/io.s
@@ -44,7 +50,7 @@ elf.o: lib/elf.c include/elf.h
 cpuid.o: 
 	${CC} ${CFLAGS} -c lib/cpuid.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	
-kernel.o: kernel/kernel.c screen.o lib/screen.c cpuid.o
+kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o interrupt_handler.o interrupts_common.o
 	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T kernel/kernel.ld -o kernel.img
 
