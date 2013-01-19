@@ -19,7 +19,7 @@ int main() {
 
     int a = 0;
 
-    unsigned char b = 0;
+    asm("int $0x80\n");
 
     asm("int3\n");
 

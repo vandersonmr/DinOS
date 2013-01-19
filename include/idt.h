@@ -35,5 +35,6 @@ void idt_init(struct idt_entry *, struct idt *);
 extern void int0();
 extern void int3();
 extern void int4();
+extern void int128();
 
 #endif
