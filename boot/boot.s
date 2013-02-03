@@ -57,6 +57,7 @@ L2:
     dec ecx
     jnz L2
 
+    ;call enable_paging
 
     ; Carregando o init.bin na memória
     push 40
@@ -70,6 +71,7 @@ L2:
 
 
 %include "lib/io.s"
+%include "vm/paging.s"
 
 
 INIT:

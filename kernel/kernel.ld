@@ -6,6 +6,7 @@ INPUT(
     string.o
     screen.o
     cpuid.o
+    vm/paging.o
     )
 
 ENTRY(main);

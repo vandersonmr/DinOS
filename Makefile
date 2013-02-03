@@ -2,6 +2,7 @@ CC=/opt/local/bin/i386-elf-gcc
 LD=/opt/local/bin/i386-elf-ld
 NASM=nasm
 CFLAGS=-Wall -Wextra -g -O0 -I./include
+MAKE=make
 
 all: buildimage
 
@@ -43,10 +44,14 @@ elf.o: lib/elf.c include/elf.h
 
 cpuid.o: 
 	${CC} ${CFLAGS} -c lib/cpuid.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
+paging.o:
+	${MAKE} -C vm/
 	
-kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o
+kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o
 	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T kernel/kernel.ld -o kernel.img
 
 clean:
 	rm -rf *.o *.img *.bin
+	${MAKE} -C vm/ clean

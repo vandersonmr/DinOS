@@ -5,11 +5,17 @@ section .text
 extern exception_zero
 extern exception_breakpoint
 extern exception_overflow
+extern exception_doublefault
 extern exception_syscall
+extern exception_generalprotection
+extern exception_pagefault
 
 global int0
 global int3
 global int4
+global int8
+global int13
+global int14
 global int128 ; 0x80
 
 int0:
@@ -59,6 +65,51 @@ int4:
     popa
     sti
     iret
+
+int8:
+    cli
+    pusha
+    push gs
+    push fs
+    push ds
+    push es
+    call exception_doublefault
+    pop es
+    pop ds
+    pop fs
+    pop gs
+    popa
+    sti
+
+int13:
+    cli
+    pusha
+    push gs
+    push fs
+    push ds
+    push es
+    call exception_generalprotection
+    pop es
+    pop ds
+    pop fs
+    pop gs
+    popa
+    sti
+
+int14:
+    cli
+    pusha
+    push gs
+    push fs
+    push ds
+    push es
+    call exception_pagefault
+    pop es
+    pop ds
+    pop fs
+    pop gs
+    popa
+    sti
 
 int128:
     cli

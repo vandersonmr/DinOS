@@ -2,6 +2,7 @@
 #include "screen.h"
 #include "string.h"
 #include "cpuid.h"
+#include "paging.h"
 
 
 struct cpuid *cpuinfo; 
@@ -22,6 +23,8 @@ int main() {
     asm("int $0x80\n");
 
     asm("int3\n");
+
+    //enable_paging();
 
     a /= a;
 
