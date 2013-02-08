@@ -16,6 +16,10 @@ start16:
     ;int 0x13
 
 
+    mov ax, 0xe801
+    int 0x15
+    mov [0x7000], bx
+
     cli
 
     xor ax, ax
@@ -75,6 +79,7 @@ L2:
 
 
 INIT:
+
     call 0x1000
 
 

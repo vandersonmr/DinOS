@@ -2,6 +2,9 @@
 #include "string.h"
 #include "screen.h"
 
+unsigned int *memp = 0x7000;
+unsigned int mem;
+
 void init() {
 
     unsigned char *kernel = (unsigned char *) 0xffffff;
@@ -9,10 +12,15 @@ void init() {
     unsigned char *rodata = (unsigned char *) 0x200000;
     unsigned char *data = (unsigned char *) 0x300000;
 
+    mem = *memp;
+
     int (*kernel_code)() = (int(*)()) text;
 
     clearscreen();
-    print("Kernel Loading...", 0, 0);
+
+    print("Memoria: %d KB", 0, 0, ((mem * 65536) + 16777216) / 1024);
+
+    print("Kernel Loading...", 1, 0);
 
     readsegment((void *)kernel, 64, 18432);
 
@@ -21,5 +29,6 @@ void init() {
     memcpy((void *)data, (void *)kernel + 0x3000, 0x100000);
 
     kernel_code();
+
 
 }

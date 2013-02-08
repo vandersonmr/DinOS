@@ -17,7 +17,7 @@ enable_paging:
     or eax, ebx
     mov cr0, eax
 
-    mov eax, 0x00
+    mov eax, [ebp + 8]
     mov cr3, eax
 
     pop ebx
