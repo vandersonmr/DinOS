@@ -1,7 +1,17 @@
 #include "string.h"
 
-void exception_zero(void) {
-    print("Ocorreu uma divisao por zero!", 11, 0);
+void exception_zero(void) { 
+    /*If your kernel issued a division by zero, trying to return to the 'div'
+     	instruction will only trigger the exception one more time (yeah! altogether, now :) 
+     	http://wiki.osdev.org/Exceptions */
+    print("Ocorreu uma divisao por zero! ", 11, 0);
+    /* O return volta para a instrução do div. E por isso volta a dar erro.
+	Não seria certo avançar para próxima instrução porque é um erro grave 
+	e que não deveria ocorrer no kernel.*/
+    while(1){}; /* aqui deveria abortar o boot.
+			No futuro, se causado por um processo, aqui deverá ter 
+			uma função para abortar o processo (que gerou o erro) 
+			e chamar um outro processo para ser executado.*/
 }
 
 void exception_overflow(void) {
