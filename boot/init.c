@@ -1,6 +1,7 @@
 #include "x86.h"
 #include "string.h"
 #include "screen.h"
+#include "paging.h"
 
 unsigned int *memp = 0x7000;
 unsigned int mem;
@@ -27,6 +28,7 @@ void init() {
     memcpy((void *)text, (void *)kernel + 0x1000, 0x100000);
     memcpy((void *)rodata, (void *)kernel + 0x2000, 0x100000);
     memcpy((void *)data, (void *)kernel + 0x3000, 0x100000);
+
 
     kernel_code();
 

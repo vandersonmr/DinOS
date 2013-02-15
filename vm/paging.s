@@ -12,13 +12,14 @@ enable_paging:
 
     mov ebx, 1
     sal ebx, 31
+    
+    mov eax, [ebp + 8]
+    mov cr3, eax
 
     mov eax, cr0
     or eax, ebx
     mov cr0, eax
 
-    mov eax, [ebp + 8]
-    mov cr3, eax
 
     pop ebx
     pop eax
