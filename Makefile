@@ -1,5 +1,5 @@
-CC=/opt/local/bin/i386-elf-gcc
-LD=/opt/local/bin/i386-elf-ld
+CC=gcc
+LD=ld
 NASM=nasm
 CFLAGS=-Wall -Wextra -g -O0 -I./include
 MAKE=make
@@ -12,12 +12,12 @@ buildimage: boot.o init.o kernel.o disk.img
 	dd if=kernel.img of=disk.img bs=512 seek=64 conv=notrunc > /dev/null 2>&1
 
 disk.img:
-	dd if=/dev/zero of=disk.img bs=1m count=10 > /dev/null 2>&1
+	dd if=/dev/zero of=disk.img bs=1M count=10 > /dev/null 2>&1
 
 boot.o: boot/boot.s
 	${NASM} -fbin -o boot.o boot/boot.s
 
-init.o: boot/init.c screen.o lib/screen.c include/screen.h string.o io.o include/x86.h
+init.o: boot/init.c screen.o lib/screen.c include/screen.h string.o io.o include/x86.h 
 	${CC} ${CFLAGS} -c boot/init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T boot/init.ld -o init.bin
 

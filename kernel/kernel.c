@@ -10,6 +10,7 @@ struct idt_entry idt_entries[256];
 struct idt idt_table;
 
 int main() { 
+    paging_init();
 
     print("Kernel Loaded\n",2, 0);
 
@@ -25,7 +26,7 @@ int main() {
 
     int a = 0;
 
-    a /= a;
+    a = a/a;
 
     asm("int $0x80\n");
 

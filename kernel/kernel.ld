@@ -7,6 +7,7 @@ INPUT(
     screen.o
     cpuid.o
     vm/paging.o
+    vm/vm.o
     )
 
 ENTRY(main);
