@@ -1,4 +1,4 @@
-CC=gcc
+CC=clang
 LD=ld
 NASM=nasm
 CFLAGS=-Wall -Wextra -g -O0 -I./include
