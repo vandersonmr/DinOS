@@ -1,7 +1,7 @@
 #ifndef _STRING_H_
 #define _STRING_H_
 
-int memcpy(const void *, const void *, const int);
-int memset(const void *, const unsigned char, const int);
+void * memcpy(void *, const void *, unsigned int);
+void * memset(void *, int, unsigned int);
 
 #endif

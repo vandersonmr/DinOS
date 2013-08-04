@@ -3,7 +3,7 @@
 #include "screen.h"
 #include "paging.h"
 
-unsigned int *memp = 0x7000;
+unsigned int *memp = (unsigned int *) 0x7000;
 unsigned int mem;
 
 void init() {

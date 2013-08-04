@@ -18,6 +18,8 @@ memcpy:
 
     repnz movsb
 
+    mov eax, edi
+
     pop ecx
     pop esi
     pop edi
@@ -39,6 +41,8 @@ memset:
     mov ecx, [ebp + 16]
 
     repnz stosb
+
+    mov eax, edi
 
     pop ecx
     pop eax

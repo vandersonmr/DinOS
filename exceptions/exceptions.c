@@ -1,4 +1,5 @@
 #include "string.h"
+#include "screen.h"
 
 void exception_zero(void) { 
     /*If your kernel issued a division by zero, trying to return to the 'div'

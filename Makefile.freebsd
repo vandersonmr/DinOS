@@ -18,14 +18,14 @@ boot.o: boot/boot.s
 	${NASM} -fbin -o boot.o boot/boot.s
 
 init.o: boot/init.c screen.o lib/screen.c include/screen.h string.o io.o include/x86.h 
-	${CC} ${CFLAGS} -c boot/init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	${CC} ${CFLAGS} -c boot/init.c -nostdlib -fno-builtin
 	${LD} -melf_i386_fbsd -T boot/init.ld -o init.bin
 
 exceptions.o: exceptions/exceptions.c
-	${CC} ${CFLAGS} -c exceptions/exceptions.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	${CC} ${CFLAGS} -c exceptions/exceptions.c -nostdlib -fno-builtin
 
 idt.o: exceptions/idt.c include/idt.h exceptions.o
-	${CC} ${CFLAGS} -c exceptions/idt.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	${CC} ${CFLAGS} -c exceptions/idt.c -nostdlib -fno-builtin
 
 interrupts_trampoline.o: exceptions/interrupts_trampoline.s
 	${NASM} -felf32 -g -o interrupts_trampoline.o exceptions/interrupts_trampoline.s
@@ -37,19 +37,19 @@ string.o: lib/string.s include/string.h
 	${NASM} -felf32 -g -o string.o lib/string.s
 
 screen.o: lib/screen.c include/screen.h
-	${CC} ${CFLAGS} -c lib/screen.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	${CC} ${CFLAGS} -c lib/screen.c -nostdlib -fno-builtin
 
 elf.o: lib/elf.c include/elf.h
-	${CC} ${CFLAGS} -c lib/elf.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	${CC} ${CFLAGS} -c lib/elf.c -nostdlib -fno-builtin
 
 cpuid.o: 
-	${CC} ${CFLAGS} -c lib/cpuid.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	${CC} ${CFLAGS} -c lib/cpuid.c -nostdlib -fno-builtin
 
 paging.o:
 	${MAKE} -f Makefile.freebsd -C vm/
 	
 kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o
-	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin
 	${LD} -melf_i386_fbsd -T kernel/kernel.ld -o kernel.img
 
 clean:
