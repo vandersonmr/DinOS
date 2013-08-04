@@ -19,9 +19,9 @@ void init() {
 
     clearscreen();
 
-    print("Memoria: %d KB", 0, 0, ((mem * 65536) + 16777216) / 1024);
+    print("Memoria: %d KB", ((mem * 65536) + 16777216) / 1024);
 
-    print("Kernel Loading...", 1, 0);
+    print("Kernel Loading...");
 
     readsegment((void *)kernel, 64, 18432);
 

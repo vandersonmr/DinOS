@@ -17,6 +17,9 @@ typedef char *va_list;
 // Local da memória onde a tela é mapeada
 #define VIDEO 0xB8000
 
+// Line accumulator
+int line_counter = 0;
+
 /*
 *   Função getInt retorna um inteiro (4 bytes) a partir de um ponteiro.
 *   O ponteiro deve estar apontando para o primeiro byte de um inteiro.
@@ -71,14 +74,15 @@ char* printint( int value, char * video, int base)
 *		\n Quebra de linha
 *		
 */
-void print(const char *str,int x, int y,...){
+void print(const char *str, ...){
 
-	char *video = ((char *) VIDEO) + 160 * x + y;
+	char *video = ((char *) VIDEO) + 160 * line_counter;
 
 	char *s;
 
+    line_counter++;
 	
-	va_list va = (char*)(&y + 1);
+	va_list va = (char*)(&line_counter + 1);
 	while(*str != 0){
 		if(*str != '%'){
 			

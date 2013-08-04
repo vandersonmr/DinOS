@@ -11,9 +11,11 @@ struct idt idt_table;
 
 int main() { 
     paging_init();
-    print("VM init. I don't know WHY, but it's working so don't change this shit!\n",2,0);
+    print("VM init. I don't know WHY, but it's working so don't change this shit!\n");
 	
-    print("Kernel Loaded\n",3, 0);
+    print("Kernel Loaded...\n");
+
+    print("Let the carnage bagin!\n");
     
     memset(idt_entries, 0, sizeof(struct idt_entry) * 256);
 
