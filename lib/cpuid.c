@@ -2,8 +2,8 @@
 
 #include "cpuid.h" 
 
-void doCpuid(unsigned info, unsigned *eax, unsigned *ebx, 
-				unsigned *ecx, unsigned *edx){
+void doCpuid(unsigned info, char *eax, char *ebx, 
+				char *ecx, char *edx){
 	asm volatile("cpuid"
 		      :"=a"(*eax),
 		      "=b"(*ebx),
@@ -11,25 +11,32 @@ void doCpuid(unsigned info, unsigned *eax, unsigned *ebx,
                       "=c"(*ecx)
 		      :"a"(info));
 }
+
 // Carrega o CPU's manufacturer ID string na estrutura cid 
 void loadVendorID(struct cpuid* cid){
 
-	doCpuid(0,&cid->id,cid->vendorID[0],cid->vendorID[4],cid->vendorID[8]);
+	doCpuid(0,(char*) &cid->id,&cid->vendorID[0],
+				&cid->vendorID[4],
+				&cid->vendorID[8]);
 	
 }
 
 // Preenche os campos familyInfo e featureInfo
 void loadFamilyFeatureInfo(struct cpuid* cid){
 
-	int *aux;
-	doCpuid(1,&cid->familyInfo,aux,&cid->featureInfo[0],&cid->featureInfo[1]);
+	int *aux = 0;
+	doCpuid(1,(char*) &cid->familyInfo,(char*) aux,
+				(char*) &cid->featureInfo[0],
+				(char*) &cid->featureInfo[1]);
 	
 }
 
 void loadExtendedInfo(struct cpuid* cid){
 
-	int *aux;
-	doCpuid(0x80000001,aux,aux,&cid->ExtendedInfo[1],&cid->ExtendedInfo[2]);
+	int *aux = 0;
+	doCpuid(0x80000001,(char*) aux,(char*) aux,
+				(char*) &cid->ExtendedInfo[1],
+				(char*) &cid->ExtendedInfo[2]);
 	
 }
 
@@ -44,5 +51,3 @@ void loadCpuInfo(struct cpuid* cid){
 int hasLongmodeSupport(struct cpuid* cid){
 	return *(cid->ExtendedInfo) & 0x20000000;
 }
-
-
