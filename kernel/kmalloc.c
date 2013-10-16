@@ -6,11 +6,11 @@ unsigned int kmalloc(int size) {
 
     unsigned int mem = initial_memory;
 
-    size = size - (size % 4096);
-    size += 4096;
+    //size = size - (size % 4096);
+    //size += 4096;
 
-    initial_memory += size
-
+    initial_memory += size;
     return mem;
 
 }
+
