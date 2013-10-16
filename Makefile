@@ -17,7 +17,7 @@ disk.img:
 boot.o: boot/boot.s
 	${NASM} -fbin -o boot.o boot/boot.s
 
-init.o: boot/init.c screen.o lib/screen.c include/screen.h string.o io.o include/x86.h 
+init.o: boot/init.c screen.o lib/screen.c include/screen.h string.o io.o include/x86.h
 	${CC} ${CFLAGS} -c boot/init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T boot/init.ld -o init.bin
 
@@ -42,13 +42,19 @@ screen.o: lib/screen.c include/screen.h
 elf.o: lib/elf.c include/elf.h
 	${CC} ${CFLAGS} -c lib/elf.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
-cpuid.o: 
+cpuid.o:
 	${CC} ${CFLAGS} -c lib/cpuid.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
+kmalloc.o:
+	${CC} ${CFLAGS} -c kernel/kmalloc.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
+linkedList.o:
+	 ${CC} ${CFLAGS} -c lib/linkedList.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
 paging.o:
 	${MAKE} -C vm/
-	
-kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o
+
+kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o kmalloc.o linkedList.o
 	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD} -T kernel/kernel.ld -o kernel.img
 

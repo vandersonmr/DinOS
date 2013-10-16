@@ -8,6 +8,8 @@ INPUT(
     cpuid.o
     vm/paging.o
     vm/vm.o
+    kmalloc.o
+    linkedList.o
     )
 
 ENTRY(main);
