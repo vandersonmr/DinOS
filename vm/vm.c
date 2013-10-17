@@ -6,16 +6,21 @@
 void paging_init(void) {
 
     memset(page_directory, 0, sizeof(unsigned long) * 1024);
-    memset(page_table, 0, sizeof(unsigned long) * 1024);
+    memset(page_tables, 0,
+          sizeof(unsigned long) * 1024 * page_directory_size);
 
-    int i;
-    for(i=0;i<1024;i++){
-        page_table[i] = (i*4096) | flagsPTE;
-        page_directory[i] = 0;
+    int i,j,address = 0;
+    for(j=0;j<page_directory_size;j++){
+
+      for(i=0;i<1024;i++){
+           page_tables[j].entry[i] = address | flagsPTE;
+           address = address + 4096;
+      }
+
+      page_directory[j] = (unsigned long) &page_tables[j] | flagsPDE;
     }
-
-    page_directory[0] = (unsigned long) page_table | flagsPDE;
-
     enable_paging((unsigned long)page_directory);
 }
+
+
 
