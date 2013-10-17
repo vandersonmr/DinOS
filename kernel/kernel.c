@@ -29,10 +29,7 @@ int main() {
     insertLinkedList(list,(void*)&b);
     int size = sizeLinkedList(list);
 
-    /* print("Tamanho da lista:  %d \n",list);
-     * Se checar no GDB o size está 2, contudo o print está gerando falha
-     * de página. Não se sabe o porque! E um simples print sem a variável size
-     * funciona! */
+    print("Tamanho da lista:  %d \n",size);
 
     asm("int $0x80\n");
 
