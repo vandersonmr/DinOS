@@ -1,4 +1,5 @@
 #include "idt.h"
+#include "mm.h"
 #include "screen.h"
 #include "string.h"
 #include "cpuid.h"
@@ -21,16 +22,17 @@ int main() {
     memset(idt_entries, 0, sizeof(struct idt_entry) * 256);
 
     idt_init(idt_entries, &idt_table);
+    memory_init(0,100);
 
     int a = 0;
     int b = 10;
-    unsigned int* list = createLinkedList();
-    insertLinkedList(list,(void*)&a);
-    insertLinkedList(list,(void*)&b);
-    int size = sizeLinkedList(list);
+    unsigned int* list = create_linked_list();
+    insert_linked_list(list,(void*)&a);
+    insert_linked_list(list,(void*)&b);
+    int size = size_linked_list(list);
 
-    print("Tamanho da lista:  %d \n",size);
-
+    print("Tamanho da lista:  %d \n", size);
+    
     asm("int $0x80\n");
 
     for(;;);

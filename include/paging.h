@@ -1,7 +1,7 @@
 #ifndef _PAGING_H_
 #define _PAGING_H_
 
-#define page_directory_size 32
+#define page_directory_size 64
 
 unsigned long kpage_directory[1024] __attribute__ ((aligned (4096)));
 

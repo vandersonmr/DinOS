@@ -24,14 +24,3 @@ void paging_init(void) {
     enable_paging((unsigned long)kpage_directory);
 }
 
-vm_block getFreeVM(int size){
-
-}
-
-void freeVM(vm_block inUseVM){
-
-}
-
-void mapMemory(memory_block memory, vm_block vm){
-
-}

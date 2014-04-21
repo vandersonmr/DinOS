@@ -1,10 +1,10 @@
 CC=clang
 LD=ld
 NASM=nasm
-CFLAGS=-Wall -Wextra -g -O0 -I./include
+CFLAGS=-m32 -Wall -Wextra -g -O0 -I./include
 MAKE=make
 
-all: buildimage
+all: clean buildimage
 
 buildimage: boot.o init.o kernel.o disk.img
 	dd if=boot.o of=disk.img bs=512 count=1 conv=notrunc > /dev/null 2>&1
@@ -15,11 +15,11 @@ disk.img:
 	dd if=/dev/zero of=disk.img bs=1M count=10 > /dev/null 2>&1
 
 boot.o: boot/boot.s
-	${NASM} -fbin -o boot.o boot/boot.s
+	${NASM} -felf32 -fbin -o boot.o boot/boot.s
 
 init.o: boot/init.c screen.o lib/screen.c include/screen.h string.o io.o include/x86.h
 	${CC} ${CFLAGS} -c boot/init.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
-	${LD} -T boot/init.ld -o init.bin
+	${LD} -melf_i386 -T boot/init.ld -o init.bin
 
 exceptions.o: exceptions/exceptions.c
 	${CC} ${CFLAGS} -c exceptions/exceptions.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
@@ -49,14 +49,17 @@ kmalloc.o:
 	${CC} ${CFLAGS} -c kernel/kmalloc.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
 linkedList.o:
-	 ${CC} ${CFLAGS} -c lib/linkedList.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+	${CC} ${CFLAGS} -c lib/linkedList.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
 paging.o:
 	${MAKE} -C vm/
 
-kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o kmalloc.o linkedList.o
+mm.o:
+	$(CC) $(CFLAGS) -c mm/mm.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
+kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o kmalloc.o linkedList.o mm.o
 	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
-	${LD} -T kernel/kernel.ld -o kernel.img
+	${LD}  -melf_i386 -T kernel/kernel.ld -o kernel.img
 
 clean:
 	rm -rf *.o *.img *.bin

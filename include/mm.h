@@ -11,4 +11,6 @@ typedef struct memory_block {
 unsigned int* free_memory_blocks;
 unsigned int* inUse_memory_blocks;
 
+void memory_init(unsigned int,unsigned int);
+
 #endif

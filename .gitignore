@@ -1,0 +1,7 @@
+*.o
+*.class
+*.so
+
+*.jar
+*.swp
+*.img

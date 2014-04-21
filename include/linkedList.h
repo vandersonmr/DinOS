@@ -1,9 +1,9 @@
 #ifndef _LINKEDLIST_H_
 #define _LINKEDLIST_H_
 
-unsigned int* createLinkedList();
-void insertLinkedList(unsigned int*,void*);
-void* removeLinkedList(unsigned int*,int (*f)(void*));
-int sizeLinkedList(unsigned int*);
+unsigned int* create_linked_list();
+void insert_linked_list(unsigned int*,void*);
+void* remove_linked_list(unsigned int*,int (*f)(void*));
+int size_linked_list(unsigned int*);
 
 #endif

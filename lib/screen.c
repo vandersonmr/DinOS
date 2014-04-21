@@ -82,7 +82,7 @@ void print(const char *str, ...){
 
    line_counter++;
 
-   va_list va = (char*)(&str + 4);
+   va_list va = (char*)(&str + 5);
    while(*str != 0){
       if(*str != '%'){
 

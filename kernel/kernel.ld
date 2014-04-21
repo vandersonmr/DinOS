@@ -10,7 +10,8 @@ INPUT(
     vm/vm.o
     kmalloc.o
     linkedList.o
-    )
+    mm.o
+)
 
 ENTRY(main);
 
