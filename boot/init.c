@@ -38,7 +38,7 @@ void init() {
 
     clearscreen();
 
-    print("Memoria: %d KB", ((mem * 65536) + 16777216) / 1024);
+    print("Memoria: %d MB", ((mem * 65536) + 16777216) / (1024*1024));
 
     print("Kernel Loading...");
     print(" ");
@@ -50,9 +50,9 @@ void init() {
 
     readsegment((void *)kernel, 64, 18432);
 
-    memcpy((void *)text  ,   (void *)kernel + 0x1000, 0x100000);
-    memcpy((void *)rodata,   (void *)kernel + 0x2000, 0x100000);
-    memcpy((void *)data  ,   (void *)kernel + 0x3000, 0x100000);
+    memcpy((void *)text  ,   (void *)kernel + 0x2000, 0x100000);
+    memcpy((void *)rodata,   (void *)kernel + 0x4000, 0x100000);
+    memcpy((void *)data  ,   (void *)kernel + 0x6000, 0x100000);
     clearscreen();
 
     kernel_code();

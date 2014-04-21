@@ -19,17 +19,17 @@ SECTIONS
 {
     . = 0x100000;
 
-    .text ALIGN (0x100000) :
+    .text BLOCK(8K) : ALIGN(8K)
     {
         *(.text)
     }
 
-    .rodata ALIGN (0x100000) :
+    .rodata BLOCK(8K) : ALIGN(8K)
     {
         *(.rodata*)
     }
 
-    .data ALIGN (0x100000) :
+    .data BLOCK(8K) : ALIGN(8K)
     {
         *(.data)
     }

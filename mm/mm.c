@@ -16,10 +16,8 @@ void memory_init(unsigned int start,unsigned int end){
   insert_linked_list(free_memory_blocks, (void*)memory);
 }
 
-/*memory_block getFreeMemory(int size){
-  
+memory_block get_free_memory(int size){  
 }
 
-void freeMemory(memory_block inUseMemory){
-
-}*/
+void free_memory(memory_block inUseMemory){
+}

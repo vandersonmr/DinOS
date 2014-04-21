@@ -12,5 +12,7 @@ unsigned int* free_memory_blocks;
 unsigned int* inUse_memory_blocks;
 
 void memory_init(unsigned int,unsigned int);
+memory_block get_free_memory(int);
+void free_memory(memory_block);
 
 #endif
