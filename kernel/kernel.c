@@ -26,17 +26,9 @@ int main() {
     print("Memory size: %d\n", info.memory_size); 
 
     idt_init(idt_entries, &idt_table);
-    memory_init(1000000,info.memory_size); 
+    memory_init(0x1000000,info.memory_size*1024*1024); 
+    memory_block* m = get_free_memory(10);
 
-    int a = 0;
-    int b = 10;
-    unsigned int* list = create_linked_list();
-    insert_linked_list(list,(void*)&a);
-    insert_linked_list(list,(void*)&b);
-    int size = size_linked_list(list);
-
-    print("Tamanho da lista:  %d \n", size);
-    
     asm("int $0x80\n");
 
     for(;;);

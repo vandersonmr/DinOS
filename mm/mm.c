@@ -39,5 +39,7 @@ memory_block* get_free_memory(int size){
   return m;
 }
 
-void free_memory(memory_block inUseMemory){
+void free_memory(memory_block* inUseMemory){
+  inUseMemory->inUse = 0;
+  insert_linked_list(free_memory_blocks, inUseMemory); 
 }
