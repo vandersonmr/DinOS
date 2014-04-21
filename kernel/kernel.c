@@ -5,24 +5,28 @@
 #include "cpuid.h"
 #include "paging.h"
 #include "linkedList.h"
-
-struct cpuid *cpuinfo;
+#include "cpuid.h"
 
 struct idt_entry idt_entries[256];
 struct idt idt_table;
 
 int main() {
     paging_init();
-    print("VM init. I don't know WHY, but it's working so don't change this shit!\n");
+    print("VM init.\n");
 
-    print("Kernel Loaded...\n");
+    print("Kernel Loading...\n");
 
     print("Let the carnage bagin!\n");
 
     memset(idt_entries, 0, sizeof(struct idt_entry) * 256);
 
+    struct cpuid info;
+    load_cpu_info(&info);
+    
+    print("Memory size: %d\n", info.memory_size); 
+
     idt_init(idt_entries, &idt_table);
-    memory_init(0,100);
+    memory_init(1000000,info.memory_size); 
 
     int a = 0;
     int b = 10;

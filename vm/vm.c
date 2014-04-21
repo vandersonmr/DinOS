@@ -21,6 +21,7 @@ void paging_init(void) {
 
       kpage_directory[j] = (unsigned long) &kpage_tables[j] | flagsPDE;
     }
+
     enable_paging((unsigned long)kpage_directory);
 }
 

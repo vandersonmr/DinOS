@@ -4,7 +4,6 @@
 #include "paging.h"
 
 unsigned int *memp = (unsigned int *) 0x7000;
-unsigned int mem;
 
 char dinLogo[17][85] = 
 {{"DDDDDDDDDDDDD          iiii                        OOOOOOOOO        SSSSSSSSSSSSSSS \n"},
@@ -33,13 +32,10 @@ void init() {
     unsigned char *data   = (unsigned char *) 0x300000;
 
     mem = *memp;
-
     int (*kernel_code)() = (int(*)()) text;
 
     clearscreen();
-
-    print("Memoria: %d MB", ((mem * 65536) + 16777216) / (1024*1024));
-
+    
     print("Kernel Loading...");
     print(" ");
     int i;//,j,p,t;

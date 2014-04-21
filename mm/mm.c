@@ -16,7 +16,27 @@ void memory_init(unsigned int start,unsigned int end){
   insert_linked_list(free_memory_blocks, (void*)memory);
 }
 
-memory_block get_free_memory(int size){  
+int fitnessSize = 0;
+int fit(void* m) {
+  return ((memory_block*)m)->size >= fitnessSize;  
+}
+
+memory_block* get_free_memory(int size){  
+  fitnessSize = size;
+  memory_block* m = remove_linked_list(free_memory_blocks, fit);
+  if(m->size > size) {
+    memory_block* rest = (memory_block*) kmalloc(sizeof(memory_block));
+    rest->start = m->start;
+    rest->end   = m->end  - size;
+    rest->size  = m->size - size;
+    rest->inUse = 0;
+    insert_linked_list(free_memory_blocks, (void*)m);
+
+    m->size  = size;
+    m->start = m->start + size;
+  }
+  m->inUse = 1;
+  return m;
 }
 
 void free_memory(memory_block inUseMemory){

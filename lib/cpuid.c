@@ -1,5 +1,4 @@
 /* Código responsável por buscar informações da CPU e checar suas capacidades */
-
 #include "cpuid.h" 
 
 void doCpuid(unsigned info, char *eax, char *ebx, 
@@ -13,41 +12,48 @@ void doCpuid(unsigned info, char *eax, char *ebx,
 }
 
 // Carrega o CPU's manufacturer ID string na estrutura cid 
-void loadVendorID(struct cpuid* cid){
+void load_vendor_id(struct cpuid* cid){
 
-	doCpuid(0,(char*) &cid->id,&cid->vendorID[0],
-				&cid->vendorID[4],
-				&cid->vendorID[8]);
+	doCpuid(0,(char*) &cid->id,&cid->vendor_id[0],
+				&cid->vendor_id[4],
+				&cid->vendor_id[8]);
 	
 }
 
 // Preenche os campos familyInfo e featureInfo
-void loadFamilyFeatureInfo(struct cpuid* cid){
+void load_family_feature_info(struct cpuid* cid){
 
 	int *aux = 0;
-	doCpuid(1,(char*) &cid->familyInfo,(char*) aux,
-				(char*) &cid->featureInfo[0],
-				(char*) &cid->featureInfo[1]);
+	doCpuid(1,(char*) &cid->family_info,(char*) aux,
+				(char*) &cid->feature_info[0],
+				(char*) &cid->feature_info[1]);
 	
 }
 
-void loadExtendedInfo(struct cpuid* cid){
+void load_extended_info(struct cpuid* cid){
 
 	int *aux = 0;
 	doCpuid(0x80000001,(char*) aux,(char*) aux,
-				(char*) &cid->ExtendedInfo[1],
-				(char*) &cid->ExtendedInfo[2]);
+				(char*) &cid->Extended_info[1],
+				(char*) &cid->Extended_info[2]);
 	
 }
 
+void load_memory_size(struct cpuid* cid) {
+  unsigned int* memp = (unsigned int*) 0x7000;
+  cid->memory_size = (((*memp) * 65536) + 16777216) / (1024*1024);
+}
+
 // Carrega todos os dados do CPU na estrutura cid
-void loadCpuInfo(struct cpuid* cid){
-	loadVendorID(cid);
-	loadFamilyFeatureInfo(cid);
-	loadExtendedInfo(cid);
+void load_cpu_info(struct cpuid* cid){
+	load_vendor_id(cid);
+	load_family_feature_info(cid);
+	load_extended_info(cid);
+  load_memory_size(cid);
 }
 
 // AMD64 compliant processors have the longmode-capable-bit turned on in the extended feature
-int hasLongmodeSupport(struct cpuid* cid){
-	return *(cid->ExtendedInfo) & 0x20000000;
+int has_longmode_support(struct cpuid* cid){
+	return *(cid->Extended_info) & 0x20000000;
 }
+

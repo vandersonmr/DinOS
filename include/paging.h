@@ -3,6 +3,7 @@
 
 #define page_directory_size 64
 
+unsigned int mem;
 unsigned long kpage_directory[1024] __attribute__ ((aligned (4096)));
 
 typedef struct page_table_t {
