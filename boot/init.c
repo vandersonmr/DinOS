@@ -23,11 +23,11 @@ void init() {
 
     print("Kernel Loading...");
 
-    readsegment((void *)kernel, 64, 18432);
+    readsegment((void *)kernel, 64, 32768);
 
     memcpy((void *)text, (void *)kernel + 0x1000, 0x100000);
-    memcpy((void *)rodata, (void *)kernel + 0x2000, 0x100000);
-    memcpy((void *)data, (void *)kernel + 0x3000, 0x100000);
+    memcpy((void *)rodata, (void *)kernel + 0x3000, 0x100000);
+    memcpy((void *)data, (void *)kernel + 0x5000, 0x100000);
 
 
     kernel_code();

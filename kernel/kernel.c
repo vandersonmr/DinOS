@@ -4,6 +4,8 @@
 #include "cpuid.h"
 #include "paging.h"
 #include "linkedList.h"
+#include "x86.h"
+#include "serial.h"
 
 struct cpuid *cpuinfo;
 
@@ -17,6 +19,10 @@ int main() {
     print("Kernel Loaded...\n");
 
     print("Let the carnage bagin!\n");
+
+    print("Starting COM1 serial port\n");
+    serial_setup();
+    serial_write_byte(0x41);
 
     memset(idt_entries, 0, sizeof(struct idt_entry) * 256);
 

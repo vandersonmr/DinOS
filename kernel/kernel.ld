@@ -2,6 +2,8 @@ INPUT(
     kernel.o
     idt.o
     interrupts_trampoline.o
+    io.o
+    serial.o
     exceptions.o
     string.o
     screen.o
