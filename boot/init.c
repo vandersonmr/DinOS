@@ -44,12 +44,19 @@ void init() {
 	    //for(j=0;j<32766;j++){ for(p=0;p<300;p++){ t=p*j; } }
     }	
 
-    readsegment((void *)kernel, 64, 18432);
+    readsegment((void *)kernel, 64, 32768);
 
+<<<<<<< HEAD
     memcpy((void *)text  ,   (void *)kernel + 0x2000, 0x100000);
     memcpy((void *)rodata,   (void *)kernel + 0x4000, 0x100000);
     memcpy((void *)data  ,   (void *)kernel + 0x6000, 0x100000);
     clearscreen();
+=======
+    memcpy((void *)text, (void *)kernel + 0x1000, 0x100000);
+    memcpy((void *)rodata, (void *)kernel + 0x3000, 0x100000);
+    memcpy((void *)data, (void *)kernel + 0x5000, 0x100000);
+
+>>>>>>> 0993c17bbca796d0db3f523f151d30dcc8bd02dd
 
     kernel_code();
 

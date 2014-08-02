@@ -5,7 +5,14 @@
 #include "cpuid.h"
 #include "paging.h"
 #include "linkedList.h"
+<<<<<<< HEAD
 #include "cpuid.h"
+=======
+#include "x86.h"
+#include "serial.h"
+
+struct cpuid *cpuinfo;
+>>>>>>> 0993c17bbca796d0db3f523f151d30dcc8bd02dd
 
 struct idt_entry idt_entries[256];
 struct idt idt_table;
@@ -17,6 +24,10 @@ int main() {
     print("Kernel Loading...\n");
 
     print("Let the carnage bagin!\n");
+
+    print("Starting COM1 serial port\n");
+    serial_setup();
+    serial_write_byte(0x41);
 
     memset(idt_entries, 0, sizeof(struct idt_entry) * 256);
 
