@@ -5,14 +5,11 @@
 #include "cpuid.h"
 #include "paging.h"
 #include "linkedList.h"
-<<<<<<< HEAD
 #include "cpuid.h"
-=======
 #include "x86.h"
 #include "serial.h"
 
 struct cpuid *cpuinfo;
->>>>>>> 0993c17bbca796d0db3f523f151d30dcc8bd02dd
 
 struct idt_entry idt_entries[256];
 struct idt idt_table;

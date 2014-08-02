@@ -57,7 +57,10 @@ paging.o:
 mm.o:
 	$(CC) $(CFLAGS) -c mm/mm.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 
-kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o kmalloc.o linkedList.o mm.o
+serial.o: kernel/serial.c
+	${CC} ${CFLAGS} -c kernel/serial.c -nostdlib -fno-builtin
+
+kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o kmalloc.o linkedList.o mm.o serial.o
 	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
 	${LD}  -melf_i386 -T kernel/kernel.ld -o kernel.img
 

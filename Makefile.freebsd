@@ -51,13 +51,16 @@ kmalloc.o:
 linkedList.o:
 	 ${CC} ${CFLAGS} -c lib/linkedList.c -nostdlib -fno-builtin
 
+mm.o:
+	$(CC) $(CFLAGS) -c mm/mm.c -nostdlib -fno-builtin -nostartfiles -nodefaultlibs
+
 serial.o: kernel/serial.c
 	 ${CC} ${CFLAGS} -c kernel/serial.c -nostdlib -fno-builtin
 
 paging.o:
 	${MAKE} -f Makefile.freebsd -C vm/
 	
-kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o kmalloc.o linkedList.o serial.o
+kernel.o: kernel/kernel.c idt.o screen.o lib/screen.c cpuid.o interrupts_trampoline.o paging.o kmalloc.o linkedList.o mm.o serial.o
 	${CC} ${CFLAGS} -c kernel/kernel.c -nostdlib -fno-builtin
 	${LD} -melf_i386_fbsd -T kernel/kernel.ld -o kernel.img
 
